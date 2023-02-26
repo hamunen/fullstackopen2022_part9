@@ -13,8 +13,8 @@ const calculateExercises = (days: number[], target: number): ExerciseResult => {
     days.reduce((sum, day) => sum + day, 0) / days.length;
 
   const successFactor = avgExerciseHours / target;
-  var rating = 1;
-  var ratingDescription = '';
+  let rating = 1;
+  let ratingDescription = '';
   if (successFactor < 0.75) {
     rating = 1;
     ratingDescription = 'very bad, work harder fatty';
