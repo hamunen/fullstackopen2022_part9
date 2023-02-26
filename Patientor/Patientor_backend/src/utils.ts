@@ -1,12 +1,12 @@
-import { NewPatient } from "./types";
+import { Gender, NewPatient } from "./types";
 
 const isString = (text: unknown): text is string => {
   return typeof text === "string" || text instanceof String;
 };
 
-const parseStringProperty = (text: unknown, propName: string): string => {
+const parseStringParam = (text: unknown, paramName: string): string => {
   if (!isString(text)) {
-    throw new Error(`Incorrect or missing ${propName}`);
+    throw new Error(`Incorrect or missing ${paramName}`);
   }
 
   return text;
@@ -23,6 +23,19 @@ const parseDate = (date: unknown): string => {
   return date;
 };
 
+const isGender = (param: string): param is Gender => {
+  return Object.values(Gender)
+    .map((v) => v.toString())
+    .includes(param);
+};
+
+const parseGender = (gender: unknown): Gender => {
+  if (!isString(gender) || !isGender(gender)) {
+    throw new Error("Incorrect gender: " + gender);
+  }
+  return gender;
+};
+
 const toNewPatient = (object: unknown): NewPatient => {
   if (!object || typeof object !== "object") {
     throw new Error("Incorrect or missing data");
@@ -36,11 +49,11 @@ const toNewPatient = (object: unknown): NewPatient => {
     "occupation" in object
   ) {
     const newPatient: NewPatient = {
-      name: parseStringProperty(object.name, "name"),
+      name: parseStringParam(object.name, "name"),
       dateOfBirth: parseDate(object.dateOfBirth),
-      ssn: parseStringProperty(object.ssn, "ssn"),
-      gender: parseStringProperty(object.gender, "gender"),
-      occupation: parseStringProperty(object.occupation, "occupation"),
+      ssn: parseStringParam(object.ssn, "ssn"),
+      gender: parseGender(object.gender),
+      occupation: parseStringParam(object.occupation, "occupation"),
     };
 
     return newPatient;
