@@ -7,8 +7,10 @@ export const getAllEntries = () => {
     .then((response) => response.data);
 };
 
-export const createEntry = (object: NewDiaryEntry) => {
-  return axios
-    .post<DiaryEntry>("http://localhost:3001/api/diares", object)
-    .then((response) => response.data);
+export const createEntry = async (object: NewDiaryEntry) => {
+  const response = await axios.post<DiaryEntry>(
+    "http://localhost:3001/api/diaries",
+    object
+  );
+  return response.data;
 };
