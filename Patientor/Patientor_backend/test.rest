@@ -25,3 +25,22 @@ content-type: application/json
   "dateOfBirth": "1988-10-10",
   "gender": "väärä"
 }
+
+###
+
+POST http://localhost:3001/api/patients/d2773336-f723-11e9-8f0b-362b9e155667/entries HTTP/1.1
+content-type: application/json
+
+{
+  "date": "1988-12-24",
+  "type": "Hospital",
+  "specialist": "MC Henri",
+  "diagnosisCodes": [
+    "S62.5"
+  ],
+  "description": "SHATTERED GLASS EVERYWHERE",
+  "discharge": {
+    "date": "1988-12-25",
+    "criteria": "Thumb has healed."
+  }
+}
