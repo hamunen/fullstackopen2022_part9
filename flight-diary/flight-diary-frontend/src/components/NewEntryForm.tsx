@@ -4,8 +4,8 @@ import { DiaryEntry, NewDiaryEntry, Visibility, Weather } from "../types";
 
 const NewEntryForm = ({ onSubmit }: { onSubmit(entry: DiaryEntry): void }) => {
   const [date, setDate] = useState("");
-  const [visibility, setVisibility] = useState("");
-  const [weather, setWeather] = useState("");
+  const [visibility, setVisibility] = useState<Visibility>();
+  const [weather, setWeather] = useState<Weather>();
   const [comment, setComment] = useState("");
   const [notification, setNotification] = useState("");
 
@@ -14,12 +14,23 @@ const NewEntryForm = ({ onSubmit }: { onSubmit(entry: DiaryEntry): void }) => {
     setTimeout(() => setNotification(""), 5000);
   };
 
+  const invalid =
+    date === "" || weather === undefined || visibility === undefined;
+
   const entryCreation = (event: React.SyntheticEvent) => {
     event.preventDefault();
+    if (visibility === undefined) {
+      notifyError("Visibility not set");
+      return;
+    }
+    if (weather === undefined) {
+      notifyError("Weather not set");
+      return;
+    }
     const newEntry: NewDiaryEntry = {
       date,
-      visibility: visibility as Visibility,
-      weather: weather as Weather,
+      visibility: visibility,
+      weather: weather,
       comment,
     };
 
@@ -28,9 +39,9 @@ const NewEntryForm = ({ onSubmit }: { onSubmit(entry: DiaryEntry): void }) => {
     });
 
     setDate("");
-    setVisibility("");
-    setWeather("");
     setComment("");
+    setVisibility(undefined);
+    setWeather(undefined);
   };
 
   return (
@@ -42,25 +53,70 @@ const NewEntryForm = ({ onSubmit }: { onSubmit(entry: DiaryEntry): void }) => {
           date
           <input
             value={date}
+            type="date"
             onChange={(event) => setDate(event.target.value)}
           />
         </label>
         <br />
 
         <label>
-          visibility
+          visibility &ensp; great
           <input
-            value={visibility}
-            onChange={(event) => setVisibility(event.target.value)}
+            type="radio"
+            name="visibility"
+            onChange={() => setVisibility(Visibility.Great)}
+          />
+          good
+          <input
+            type="radio"
+            name="visibility"
+            onChange={() => setVisibility(Visibility.Good)}
+          />
+          ok
+          <input
+            type="radio"
+            name="visibility"
+            onChange={() => setVisibility(Visibility.Ok)}
+          />
+          poor
+          <input
+            type="radio"
+            name="visibility"
+            onChange={() => setVisibility(Visibility.Poor)}
           />
         </label>
         <br />
 
         <label>
-          weather
+          weather &ensp; sunny
           <input
-            value={weather}
-            onChange={(event) => setWeather(event.target.value)}
+            type="radio"
+            name="weather"
+            onChange={() => setWeather(Weather.Sunny)}
+          />
+          rainy
+          <input
+            type="radio"
+            name="weather"
+            onChange={() => setWeather(Weather.Rainy)}
+          />
+          cloudy
+          <input
+            type="radio"
+            name="weather"
+            onChange={() => setWeather(Weather.Cloudy)}
+          />
+          stormy
+          <input
+            type="radio"
+            name="weather"
+            onChange={() => setWeather(Weather.Stormy)}
+          />
+          windy
+          <input
+            type="radio"
+            name="weather"
+            onChange={() => setWeather(Weather.Windy)}
           />
         </label>
         <br />
@@ -73,7 +129,7 @@ const NewEntryForm = ({ onSubmit }: { onSubmit(entry: DiaryEntry): void }) => {
           />
         </label>
         <br />
-        <input type="submit" value="add" />
+        <input type="submit" value="add" disabled={invalid} />
       </form>
     </div>
   );
