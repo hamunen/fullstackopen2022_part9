@@ -17,13 +17,18 @@ export const createEntry = async (
       object
     );
     return response.data;
-  } catch (error) {
-    if (axios.isAxiosError(error)) {
-      console.error(error.response);
-      // Do something with this error...
-      notifyError(error.response?.data);
+  } catch (e: unknown) {
+    if (axios.isAxiosError(e)) {
+      if (e?.response?.data && typeof e?.response?.data === "string") {
+        const message = e.response.data;
+        console.error(message);
+        notifyError(message);
+      } else {
+        notifyError("Unrecognized axios error");
+      }
     } else {
-      console.error(error);
+      console.error("Unknown error", e);
+      notifyError("Unknown error");
     }
   }
 };
