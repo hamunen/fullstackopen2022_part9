@@ -7,6 +7,12 @@ const NewEntryForm = ({ onSubmit }: { onSubmit(entry: DiaryEntry): void }) => {
   const [visibility, setVisibility] = useState("");
   const [weather, setWeather] = useState("");
   const [comment, setComment] = useState("");
+  const [notification, setNotification] = useState("");
+
+  const notifyError = (message: string) => {
+    setNotification(message);
+    setTimeout(() => setNotification(""), 5000);
+  };
 
   const entryCreation = (event: React.SyntheticEvent) => {
     event.preventDefault();
@@ -17,8 +23,8 @@ const NewEntryForm = ({ onSubmit }: { onSubmit(entry: DiaryEntry): void }) => {
       comment,
     };
 
-    createEntry(newEntry).then((data) => {
-      onSubmit(data);
+    createEntry(newEntry, notifyError).then((data) => {
+      if (data !== undefined) onSubmit(data);
     });
 
     setDate("");
@@ -30,6 +36,7 @@ const NewEntryForm = ({ onSubmit }: { onSubmit(entry: DiaryEntry): void }) => {
   return (
     <div>
       <h3>Add new entry</h3>
+      <p style={{ color: "red" }}>{notification}</p>
       <form onSubmit={entryCreation}>
         <label>
           date
