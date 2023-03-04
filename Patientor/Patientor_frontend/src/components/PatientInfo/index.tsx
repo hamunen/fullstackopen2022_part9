@@ -1,14 +1,14 @@
 //import { styled } from '@mui/material/styles';
 //import { Box, Table, Button, TableHead, Typography, TableCell, TableRow, TableBody } from '@mui/material';
 
-import { Patient } from "../../types";
+import { Diagnosis, Patient } from "../../types";
 import { useEffect, useState } from "react";
 import patientService from "../../services/patients";
 import { useParams } from "react-router-dom";
 import { Gender } from "../../types";
 import PatientInfoEntry from "./PatientInfoEntry";
 
-const PatientInfo = () => {
+const PatientInfo = ({ diagnoses }: { diagnoses: Diagnosis[] }) => {
   const id = useParams().id;
   const [patient, setPatient] = useState<Patient>();
 
@@ -45,7 +45,7 @@ const PatientInfo = () => {
       date of birth: {patient.dateOfBirth}
       <h3>entries</h3>
       {patient.entries.map((e) => (
-        <PatientInfoEntry key={e.id} entry={e} />
+        <PatientInfoEntry key={e.id} entry={e} diagnoses={diagnoses} />
       ))}
     </div>
   );
