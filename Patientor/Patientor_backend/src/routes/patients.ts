@@ -12,6 +12,7 @@ router.get("/:id", (req, res) => {
   const patient = patientService.getPatient(req.params.id);
   if (patient === undefined) {
     res.status(404).send(`Patient with id ${req.params.id} not found`);
+    return;
   }
   res.send(patient);
 });

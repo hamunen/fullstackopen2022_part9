@@ -13,7 +13,7 @@ const getPatients = (): NonSensitivePatient[] =>
     occupation,
   }));
 
-const getPatient = (id: string): NonSensitivePatient | undefined =>
+const getPatient = (id: string): Patient | undefined =>
   patients.find((p) => p.id === id);
 
 const addPatient = (patient: NewPatient): Patient => {
