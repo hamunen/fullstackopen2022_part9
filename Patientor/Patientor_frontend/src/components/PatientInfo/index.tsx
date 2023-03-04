@@ -1,14 +1,14 @@
 //import { styled } from '@mui/material/styles';
 //import { Box, Table, Button, TableHead, Typography, TableCell, TableRow, TableBody } from '@mui/material';
 
-import { Diagnosis, Patient } from "../../types";
+import { Patient } from "../../types";
 import { useEffect, useState } from "react";
 import patientService from "../../services/patients";
 import { useParams } from "react-router-dom";
 import { Gender } from "../../types";
-import PatientInfoEntry from "./PatientInfoEntry";
+import EntryInfo from "./EntryDetails";
 
-const PatientInfo = ({ diagnoses }: { diagnoses: Diagnosis[] }) => {
+const PatientInfo = () => {
   const id = useParams().id;
   const [patient, setPatient] = useState<Patient>();
 
@@ -31,7 +31,7 @@ const PatientInfo = ({ diagnoses }: { diagnoses: Diagnosis[] }) => {
       case Gender.Female:
         return "♀";
       default:
-        return "asd";
+        return "";
     }
   };
 
@@ -45,7 +45,7 @@ const PatientInfo = ({ diagnoses }: { diagnoses: Diagnosis[] }) => {
       date of birth: {patient.dateOfBirth}
       <h3>entries</h3>
       {patient.entries.map((e) => (
-        <PatientInfoEntry key={e.id} entry={e} diagnoses={diagnoses} />
+        <EntryInfo key={e.id} entry={e} />
       ))}
     </div>
   );

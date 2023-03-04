@@ -11,6 +11,7 @@ import PatientListPage from "./components/PatientListPage";
 import PatientInfo from "./components/PatientInfo";
 
 import diagnosisService from "./services/diagnoses";
+import diagnosisContext from "./context/diagnosisContext";
 
 const App = () => {
   const [patients, setPatients] = useState<Patient[]>([]);
@@ -42,18 +43,20 @@ const App = () => {
           Home
         </Button>
         <Divider hidden />
-        <Routes>
-          <Route
-            path="/"
-            element={
-              <PatientListPage patients={patients} setPatients={setPatients} />
-            }
-          />
-          <Route
-            path="/patients/:id"
-            element={<PatientInfo diagnoses={diagnoses} />}
-          />
-        </Routes>
+        <diagnosisContext.Provider value={diagnoses}>
+          <Routes>
+            <Route
+              path="/"
+              element={
+                <PatientListPage
+                  patients={patients}
+                  setPatients={setPatients}
+                />
+              }
+            />
+            <Route path="/patients/:id" element={<PatientInfo />} />
+          </Routes>
+        </diagnosisContext.Provider>
       </Container>
     </div>
   );
