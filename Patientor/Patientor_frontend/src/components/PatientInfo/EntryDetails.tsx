@@ -25,6 +25,8 @@ const HealthCheckRatingIcon = ({ rating }: { rating: HealthCheckRating }) => {
       return <FavoriteIcon sx={{ color: "red" }} />;
     case HealthCheckRating.CriticalRisk:
       return <WarningOutlinedIcon sx={{ color: "red" }} />;
+    default:
+      return assertNever(rating);
   }
 };
 
