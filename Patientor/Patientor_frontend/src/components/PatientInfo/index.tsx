@@ -1,7 +1,7 @@
 //import { styled } from '@mui/material/styles';
 //import { Box, Table, Button, TableHead, Typography, TableCell, TableRow, TableBody } from '@mui/material';
 
-import { HealthCheckEntryFormValues, Patient } from "../../types";
+import { NewEntry, Patient } from "../../types";
 import { useEffect, useState } from "react";
 import patientService from "../../services/patients";
 import { useParams } from "react-router-dom";
@@ -49,7 +49,7 @@ const PatientInfo = () => {
     }
   };
 
-  const submitNewEntry = async (values: HealthCheckEntryFormValues) => {
+  const submitNewEntry = async (values: NewEntry) => {
     try {
       const entry = await patientService.addEntry(id, values);
       setPatient({ ...patient, entries: patient.entries.concat(entry) });

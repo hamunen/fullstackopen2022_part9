@@ -1,5 +1,6 @@
 import {
   Entry,
+  EntryType,
   HealthCheckEntry,
   HealthCheckRating,
   HospitalEntry,
@@ -59,11 +60,11 @@ const HealthCheckEntryDetails = ({ entry }: { entry: HealthCheckEntry }) => (
 
 const EntryDetails = ({ entry }: { entry: Entry }) => {
   switch (entry.type) {
-    case "Hospital":
+    case EntryType.Hospital:
       return <HospitalEntryDetails entry={entry} />;
-    case "OccupationalHealthcare":
+    case EntryType.OccupationalHealthcare:
       return <OccupationalHealthcareEntryDetails entry={entry} />;
-    case "HealthCheck":
+    case EntryType.HealthCheck:
       return <HealthCheckEntryDetails entry={entry} />;
     default:
       return assertNever(entry);
